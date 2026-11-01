@@ -1,31 +1,43 @@
 run,case,model,prompt_version,verdict,finding_summary,confidence_reported,notes
-1,case-01,,v1,,,,
-1,case-02,,v1,,,,
-1,case-03,,v1,,,,
-1,case-04,,v1,,,,
-1,case-05,,v1,,,,
-1,case-06,,v1,,,,
-1,case-07,,v1,,,,
-1,case-08,,v1,,,,
-1,case-09,,v1,,,,
-1,case-10,,v1,,,,
-2,case-01,,v1,,,,
-2,case-02,,v1,,,,
-2,case-03,,v1,,,,
-2,case-04,,v1,,,,
-2,case-05,,v1,,,,
-2,case-06,,v1,,,,
-2,case-07,,v1,,,,
-2,case-08,,v1,,,,
-2,case-09,,v1,,,,
-2,case-10,,v1,,,,
-3,case-01,,v1,,,,
-3,case-02,,v1,,,,
-3,case-03,,v1,,,,
-3,case-04,,v1,,,,
-3,case-05,,v1,,,,
-3,case-06,,v1,,,,
-3,case-07,,v1,,,,
-3,case-08,,v1,,,,
-3,case-09,,v1,,,,
-3,case-10,,v1,,,,
+1,case-01,Auto,v1,caught,"Nullable request.Ids enumerated without null validation",High,"Correct finding; diff-only review"
+1,case-02,Auto,v1,caught,"SQL injection through interpolated customer and status parameters",High,"Correct security finding; diff-only review"
+1,case-03,Auto,v1,caught,"Changed monetary rounding order and mode; truncating the discount can change the final amount",High,"Correct core finding; numerical example supplied by agent was inaccurate"
+1,case-04,Auto,v1,clean,"No defect; consistent private field and constructor parameter rename",High,"Correctly identified a behavior-preserving refactor"
+1,case-05,Auto,v1,caught,"DELETE endpoint lacks required Admin authorization",High,"Correctly caught authorization defect; second finding about missing Handle wrapper is unverified and should be treated as a possible false alarm"
+1,case-06,Auto,v1,clean,"No concrete defect found in the added unit tests",Medium,"Correct clean classification; no unsupported findings"
+1,case-07,Auto,v1,caught,"Full invoice and CurrentUser objects logged, risking exposure of customer, financial and session data",High,"Correctly identified sensitive-data logging risk"
+1,case-08,Auto,v1,caught,"Replacing ConcurrentDictionary with Dictionary removes thread safety; ContainsKey plus assignment is non-atomic",High,"Both findings correctly identify concurrency risks"
+1,case-09,Auto,v1,false_alarm,"Claimed README reset instructions were misleading",High,"False positive; expected clean case; appsettings logging change correctly treated as harmless"
+1,case-10,Auto,v1,caught,"Broad Exception catch converts failures into 200 OK and hides server errors",High,"Correctly identified error-handling and HTTP contract defect"
+2,case-01,Auto,v1,caught,"Nullable BulkApproveRequest.Ids enumerated without null validation",High,"Correctly detected null-handling defect in independent baseline run"
+2,case-02,Auto,v1,caught,"SQL injection through interpolated customer and status request parameters",High,"Correctly detected unsafe SQL construction in independent baseline run"
+2,case-03,Auto,v1,caught,"Changed monetary rounding order and uses ToZero, producing an incorrect final discounted amount",High,"Correct finding; second independent session; numerical example valid"
+2,case-04,Auto,v1,clean,"Consistent rename of repository field and constructor parameter; no behavior change",High,"Correctly classified rename-only refactor as clean"
+2,case-05,Auto,v1,caught,"DELETE endpoint lacks required Admin authorization",High,"Correct security finding; secondary Handle wrapper concern unverified"
+2,case-06,Auto,v1,clean,"No concrete defect identified in whitespace validation, approval audit, or unknown invoice tests",High,"Correctly classified the test-only change as clean"
+2,case-07,Auto,v1,caught,"Full invoice and CurrentUser session objects logged, exposing potentially sensitive financial and user data",High,"Correctly identified sensitive-data logging risk in independent baseline run"
+2,case-08,Auto,v1,caught,"Replacing ConcurrentDictionary with Dictionary removes thread safety; ContainsKey plus assignment introduces a non-atomic insertion race",High,"Correctly identified both concurrency risks"
+2,case-09,Auto,v1,clean,"README clarification and ASP.NET Core logging-level change introduce no concrete defect",High,"Correctly classified clean documentation and configuration changes; no false alarm"
+2,case-10,Auto,v1,caught,"Broad catch-all converts exceptions into HTTP 200 success responses, hiding failures and bypassing expected error mapping",High,"Correctly identified exception-handling defect in independent baseline run"
+3,case-01,Auto,v1,caught,"Nullable request.Ids enumerated without null validation, causing NullReferenceException for malformed bulk-approval input",High,"Correctly detected null-handling defect in third independent baseline run"
+3,case-02,Auto,v1,caught,"SQL injection through direct interpolation of untrusted customer and status parameters",High,"Correctly detected unsafe SQL construction in third independent baseline run"
+3,case-03,Auto,v1,caught,"Changed rounding order and switched to ToZero, introducing monetary calculation differences",High,"Correctly detected monetary rounding defect in third independent baseline run"
+3,case-04,Auto,v1,clean,"Consistent rename of repository dependency field and constructor parameter; no functional change",High,"Correctly classified rename-only refactor as clean in third independent baseline run"
+3,case-05,Auto,v1,caught,"DELETE endpoint lacks required Admin-only authorization",High,"Correctly identified authorization bypass; secondary Handle error-mapping concern not counted"
+3,case-06,Auto,v1,false_alarm,"Claimed timestamp before/after assertion could be flaky due to clock changes or resolution",High,"False positive; expected clean test change; concern is speculative"
+3,case-07,Auto,v1,caught,"Full invoice and CurrentUser session objects logged, creating sensitive-data exposure risk",High,"Correctly detected sensitive-data logging defect in third independent baseline run"
+3,case-08,Auto,v1,caught,"Replacing ConcurrentDictionary with Dictionary removes thread safety; ContainsKey plus assignment introduces an insertion race",High,"Correctly identified concurrency defects in third independent baseline run"
+3,case-09,Auto,v1,clean,"README documentation and ASP.NET Core logging-level configuration introduce no defect",High,"Correctly classified clean change; no false alarm in third run"
+3,case-10,Auto,v1,caught,"Generic catch-all converts unexpected exceptions into HTTP 200 success responses, masking failures",High,"Correctly identified correctness and reliability defect in third independent baseline run"
+4,case-01,Auto,v2,caught,"BulkApprove dereferences nullable request and request.Ids without validation, causing null-reference failure",High,"Correct finding; reviewed supplied diff only; no repository inspection"
+4,case-02,Auto,v2,caught,"Search endpoint interpolates untrusted customer and status parameters into executable SQL, enabling SQL injection",High,"Correct finding; supplied diff only; concrete injection scenario"
+4,case-03,Auto,v2,caught,"Changed rounding order and uses ToZero, causing fractional-cent discounts to be truncated and invoice totals to be overstated",High,"Correct finding; supplied diff only; valid numerical failure scenario"
+4,case-04,Auto,v2,clean,"No defect found",N/A,"Correctly identified clean rename; supplied diff only"
+4,case-05,Auto,v2,caught,"New DELETE endpoint lacks Admin role authorization, allowing non-admin authenticated users to delete invoices",High,"Correct security finding; supplied diff only; no speculative findings"
+4,case-06,Auto,v2,clean,"No defect found",N/A,"Correctly identified clean test-only change; supplied diff only"
+4,case-07,Auto,v2,caught,"Approval logging serializes full invoice and session objects, risking exposure of sensitive business and authentication data",High,"Correct security finding; supplied diff only; realistic centralized-log exposure scenario"
+4,case-08,Auto,v2,caught,"Replacing ConcurrentDictionary with Dictionary and non-atomic ContainsKey/assignment introduces concurrency and data-integrity risks",High,"Correct concurrency finding; supplied diff only; concrete concurrent insertion scenario"
+4,case-09,Auto,v2,clean,"No defect found",N/A,"Correctly identified documentation/configuration-only change; supplied diff only"
+4,case-10,Auto,v2,caught,"Catch-all exception handler converts unexpected failures into HTTP 200 completed responses, masking API errors",High,"Correct exception-handling finding; supplied diff only; concrete failure scenario"
+5,custom-01,Auto,v2,caught,"Removing rejection-reason validation allows invoices to be rejected with null, empty, or whitespace reasons",High,"Custom defect case; correct business-rule and auditability finding"
+5,custom-02,Auto,v2,clean,"No defect found",N/A,"Custom clean case; correctly identified behavior-preserving local-variable rename"

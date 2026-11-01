@@ -1,0 +1,13 @@
+diff --git a/backend/src/InvoiceApp.Domain/ApprovalService.cs b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+--- a/backend/src/InvoiceApp.Domain/ApprovalService.cs
++++ b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+@@ -1,7 +1,7 @@
+ public void Approve(string invoiceId, string approvedBy)
+ {
+-    var invoice = _repository.GetById(invoiceId);
+-    invoice.Status = InvoiceStatus.Approved;
+-    invoice.DecidedBy = approvedBy;
++    var existingInvoice = _repository.GetById(invoiceId);
++    existingInvoice.Status = InvoiceStatus.Approved;
++    existingInvoice.DecidedBy = approvedBy;
+ }
