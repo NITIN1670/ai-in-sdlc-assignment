@@ -1,0 +1,12 @@
+diff --git a/backend/src/InvoiceApp.Domain/ApprovalService.cs b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+--- a/backend/src/InvoiceApp.Domain/ApprovalService.cs
++++ b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+@@ -1,8 +1,7 @@
+ public void Reject(string invoiceId, string rejectedBy, string reason)
+ {
+-    if (string.IsNullOrWhiteSpace(reason))
+-        throw new ArgumentException("Rejection reason is required.", nameof(reason));
+-
+     var invoice = _repository.GetById(invoiceId);
+     invoice.Status = InvoiceStatus.Rejected;
+     invoice.DecidedBy = rejectedBy;
